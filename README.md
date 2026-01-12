@@ -1,253 +1,83 @@
-# Universal H5P Library Loader for Moodle / Универсальный загрузчик H5P-библиотек для Moodle
+# H5P Packager Utility / Утилита сборки H5P библиотек
 
-## ENGLISH VERSION
+## Русский
 
-Universal solution for correctly loading **all H5P JavaScript libraries** in Moodle. This project fixes errors related to incorrect initialization, loading order, and conflicts between H5P libraries.
+### Описание
 
----
+Когда по каким-то причинам невозможно обновить H5P пакеты или библиотеки через стандартную таску Moodle (например, отсутствует доступ к интернету или к ресурсу с пакетами H5P), эта утилита поможет собрать H5P библиотеку с правильной структурой для Moodle. После этого архив можно вручную загрузить в Moodle через интерфейс импорта H5P.
 
-### 🎯 Purpose
+Утилита автоматически:
 
-In many Moodle installations, the server **does not have internet access**, or automatic updates of H5P libraries are disabled due to organizational or technical reasons (closed network, firewall, offline environment, security policy, etc.).
+* Читает `library.json` в каталоге библиотеки
+* Формирует имя каталога по правилам H5P (`machineName` или `machineName-major.minor`)
+* Создаёт `.h5p` архив с корректной структурой, который Moodle сможет импортировать без ошибок валидации
 
-In such cases, Moodle **cannot automatically download or update H5P packages**, leading to partially installed libraries, dependency issues, and JavaScript runtime errors:
+### Установка
 
-```text
-Uncaught TypeError: H5P.* is not a constructor
-Uncaught ReferenceError: H5P is not defined
-```
+Убедитесь, что установлен Python 3.
 
-This project ensures **stable H5P operation when automatic library updates are unavailable**, and solves other loading and initialization issues.
+Склонируйте или скачайте скрипт `make_h5p.py`.
 
----
-
-### ✅ Features
-
-* Works with **all H5P libraries**
-* Ensures correct `window.H5P` initialization
-* Corrects JS dependency loading order
-* Compatible with any H5P content types (standard and custom)
-* Requires no modification of H5P libraries
-* Resilient to Moodle updates
-* Compatible with RequireJS / AMD (Moodle)
-
----
-
-### 🧩 Supported Libraries
-
-* `H5P.JoubelUI`
-* `H5P.JoubelTip`
-* `H5P.EventDispatcher`
-* `H5P.ContentType`
-* Any other H5P JS libraries
-
----
-
-### 🏗️ How it works
-
-* Centralized H5P initialization
-* Checks existence and state of `window.H5P`
-* Safe registration of H5P namespaces
-* Controls dependency loading order
-* Protects `window.H5P` from being overwritten by other code
-
----
-
-### 🚀 Installation
-
-1. Install the project in Moodle (plugin type depends on your setup)
-2. Purge Moodle caches:
-
-   ```
-   Site administration → Development → Purge all caches
-   ```
-3. Reload a page with H5P content
-
-No additional configuration is needed.
-
----
-
-### ▶️ Example usage
-
-The project can be used with a utility to prepare H5P libraries for offline use.
+### Использование
 
 ```bash
-python MakeH5P.py <path_to_H5P_library_directory>
-```
-
-Example:
-
-```bash
-python MakeH5P.py /opt/h5p/libraries/H5P.JoubelUI
-```
-
-The script:
-
-* processes the given H5P library directory
-* prepares a Moodle-compatible structure
-* allows using H5P content without server internet access
-
----
-
-### ⚠️ Issues solved
-
-| Problem                     | Solution                  |
-| --------------------------- | ------------------------- |
-| Incorrect JS loading order  | Controlled initialization |
-| `window.H5P` overwritten    | Safe restoration          |
-| Conflicts with Moodle theme | H5P code isolation        |
-| JS aggregation breaks H5P   | AMD compatibility         |
-
----
-
-### 🧪 Compatibility
-
-* Moodle 4.x+
-* `mod_h5p`
-* Official and custom H5P libraries
-
----
-
-### 📄 License
-
-MIT (or specify your license)
-
----
-
-### 🤝 Contributing
-
-Pull requests and issues are welcome. Please include:
-
-* Moodle version
-* H5P content type
-* Console stack trace
-
----
-
-## РУССКАЯ ВЕРСИЯ
-
-Универсальное решение для корректной загрузки **всех H5P JavaScript-библиотек** в Moodle. Проект устраняет ошибки, связанные с некорректной инициализацией, порядком загрузки и конфликтами H5P-библиотек.
-
----
-
-### 🎯 Назначение
-
-Во многих инсталляциях Moodle сервер **не имеет доступа к сети Интернет** или автоматическое обновление H5P-библиотек отключено по организационным или техническим причинам (закрытый контур, firewall, offline-среда, security policy и т.п.).
-
-В таких условиях Moodle **не может автоматически загрузить или обновить H5P пакеты**, что приводит к частично установленным библиотекам, нарушению зависимостей и ошибкам выполнения JavaScript:
-
-```text
-Uncaught TypeError: H5P.* is not a constructor
-Uncaught ReferenceError: H5P is not defined
-```
-
-Данный проект предназначен для обеспечения **стабильной работы H5P в условиях отсутствия автоматического обновления библиотек**, а также при любых других проблемах, связанных с загрузкой и инициализацией H5P.
-
----
-
-### ✅ Возможности
-
-* Работает **со всеми H5P-библиотеками**
-* Гарантирует корректную инициализацию `window.H5P`
-* Обеспечивает правильный порядок загрузки JS-зависимостей
-* Совместим с любыми H5P content types (стандартными и кастомными)
-* Не требует модификации H5P-библиотек
-* Устойчив к обновлениям Moodle
-* Совместим с RequireJS / AMD (Moodle)
-
----
-
-### 🧩 Поддерживаемые библиотеки
-
-* `H5P.JoubelUI`
-* `H5P.JoubelTip`
-* `H5P.EventDispatcher`
-* `H5P.ContentType`
-* любые другие H5P JS-библиотеки
-
----
-
-### 🏗️ Как это работает
-
-* Централизованная инициализация H5P
-* Проверка существования и состояния `window.H5P`
-* Безопасная регистрация H5P namespaces
-* Контроль порядка загрузки зависимостей
-* Защита от перезаписи `window.H5P` сторонним кодом
-
----
-
-### 🚀 Установка
-
-1. Установите проект в Moodle (тип плагина зависит от реализации)
-2. Очистите кэш Moodle:
-
-   ```
-   Site administration → Development → Purge all caches
-   ```
-3. Перезагрузите страницу с H5P-контентом
-
-Дополнительных настроек не требуется.
-
----
-
-### ▶️ Пример использования
-
-Проект может использоваться совместно с утилитой для подготовки H5P-библиотек в offline-среде.
-
-```bash
-python MakeH5P.py <путь_до_директории_с_H5P_библиотекой>
+python make_h5p.py /путь/к/библиотеке
 ```
 
 Пример:
 
 ```bash
-python MakeH5P.py /opt/h5p/libraries/H5P.JoubelUI
+python make_h5p.py ./H5P.JoubelUI-1.3
 ```
 
-Скрипт:
+По умолчанию создаётся архив рядом с исходной директорией с именем `H5P.JoubelUI-1.3.h5p`.
 
-* обрабатывает указанную директорию с H5P-библиотекой;
-* подготавливает структуру, совместимую с Moodle;
-* позволяет использовать H5P-контент без необходимости сетевого доступа сервера.
+Дополнительно можно указать путь вывода:
 
----
+```bash
+python make_h5p.py ./H5P.JoubelUI-1.3 -o ./archives/H5P.JoubelUI-1.3.h5p
+```
 
-### ⚠️ Какие проблемы решает
-
-| Проблема                             | Решение                      |
-| ------------------------------------ | ---------------------------- |
-| Неправильный порядок загрузки H5P JS | Контролируемая инициализация |
-| `window.H5P` перезаписывается        | Безопасное восстановление    |
-| Конфликт с темой Moodle              | Изоляция H5P-кода            |
-| JS-агрегация ломает H5P              | Совместимость с AMD          |
+Параметр `--no-skip-hidden` позволяет включать скрытые файлы и каталоги.
 
 ---
 
-### 🧪 Совместимость
+## English
 
-* Moodle 4.x+
-* `mod_h5p`
-* Официальные и кастомные H5P библиотеки
+### Description
 
----
+When it is not possible to update H5P packages or libraries using Moodle's standard task (for example, due to no internet access or blocked H5P resource servers), this utility helps package an H5P library with the correct structure for Moodle. The resulting archive can be manually uploaded through the H5P import interface.
 
-### 📄 Лицензия
+The utility automatically:
 
-MIT (или укажите свою лицензию)
+* Reads `library.json` from the library folder
+* Determines the correct directory name according to H5P rules (`machineName` or `machineName-major.minor`)
+* Creates a `.h5p` archive with a structure Moodle can import without validation errors
 
----
+### Installation
 
-### 🤝 Вклад
+Ensure Python 3 is installed.
 
-Pull requests и issues приветствуются.
+Clone or download the script `make_h5p.py`.
 
-При создании issue укажите:
+### Usage
 
-* версию Moodle
-* тип H5P-контента
-* stack trace из консоли браузера
+```bash
+python make_h5p.py /path/to/library
+```
 
----
+Example:
 
-Проект предназначен для стабильной и предсказуемой работы H5P в Moodle вне зависимости от используемых библиотек.
+```bash
+python make_h5p.py ./H5P.JoubelUI-1.3
+```
+
+By default, the archive will be created next to the source folder as `H5P.JoubelUI-1.3.h5p`.
+
+You can also specify an output path:
+
+```bash
+python make_h5p.py ./H5P.JoubelUI-1.3 -o ./archives/H5P.JoubelUI-1.3.h5p
+```
+
+Use `--no-skip-hidden` to include hidden files and directories.
