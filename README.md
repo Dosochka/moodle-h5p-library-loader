@@ -16,18 +16,18 @@
 
 Убедитесь, что установлен Python 3.
 
-Склонируйте или скачайте скрипт `make_h5p.py`.
+Склонируйте или скачайте скрипт `MakeH5P.py`.
 
 ### Использование
 
 ```bash
-python make_h5p.py /путь/к/библиотеке
+python MakeH5P.py /путь/к/библиотеке
 ```
 
 Пример:
 
 ```bash
-python make_h5p.py ./H5P.JoubelUI-1.3
+python MakeH5P.py ./H5P.JoubelUI-1.3
 ```
 
 По умолчанию создаётся архив рядом с исходной директорией с именем `H5P.JoubelUI-1.3.h5p`.
@@ -35,7 +35,7 @@ python make_h5p.py ./H5P.JoubelUI-1.3
 Дополнительно можно указать путь вывода:
 
 ```bash
-python make_h5p.py ./H5P.JoubelUI-1.3 -o ./archives/H5P.JoubelUI-1.3.h5p
+python MakeH5P.py ./H5P.JoubelUI-1.3 -o ./archives/H5P.JoubelUI-1.3.h5p
 ```
 
 Параметр `--no-skip-hidden` позволяет включать скрытые файлы и каталоги.
@@ -58,18 +58,18 @@ The utility automatically:
 
 Ensure Python 3 is installed.
 
-Clone or download the script `make_h5p.py`.
+Clone or download the script `MakeH5P.py`.
 
 ### Usage
 
 ```bash
-python make_h5p.py /path/to/library
+python MakeH5P.py /path/to/library
 ```
 
 Example:
 
 ```bash
-python make_h5p.py ./H5P.JoubelUI-1.3
+python MakeH5P.py ./H5P.JoubelUI-1.3
 ```
 
 By default, the archive will be created next to the source folder as `H5P.JoubelUI-1.3.h5p`.
@@ -77,7 +77,7 @@ By default, the archive will be created next to the source folder as `H5P.Joubel
 You can also specify an output path:
 
 ```bash
-python make_h5p.py ./H5P.JoubelUI-1.3 -o ./archives/H5P.JoubelUI-1.3.h5p
+python MakeH5P.py ./H5P.JoubelUI-1.3 -o ./archives/H5P.JoubelUI-1.3.h5p
 ```
 
 Use `--no-skip-hidden` to include hidden files and directories.
